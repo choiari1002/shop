@@ -37,19 +37,9 @@ function App() {
               }
             </div>
           </div>
+          <button>버튼</button>
         </>}/>
-        <Route path="/detail/:id" element={<>
-          <Detail shoes={shoes}></Detail>
-        </>}/>
-
-        <Route path="/about" element={<About></About>}>
-          <Route path="member" element={<>멤버임</>}/>
-          <Route path="location" element={<>위치정보임</>}/>
-        </Route>
-        <Route path="/event" element={<Event></Event>}>
-          <Route path="one" element={<>첫 주문시 양배추즙 서비스</>}/>
-          <Route path="two" element={<>생일기념 쿠폰받기</>}/>
-        </Route>
+        <Route path="/detail/:id" element={<><Detail shoes={shoes}></Detail></>}/>
         <Route path="*" element={<>404 PAGE</>} />
       </Routes>
     </div>
