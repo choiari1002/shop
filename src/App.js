@@ -3,6 +3,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import { createContext, useState } from "react";
 import Data from './Data.js';
 import Detail from './Pages/Detail.js';
+import Cart from './Pages/Cart.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import axios from 'axios';
 
@@ -64,6 +65,7 @@ function App() {
             }}>More</button>
         </>}/>
         <Route path="/detail/:id" element={<Context1.Provider value={{ inventory }}><Detail shoes={shoes}></Detail></Context1.Provider>}/>
+        <Route path="/cart" element={<Cart></Cart>} />
         <Route path="*" element={<>404 PAGE</>} />
       </Routes>
     </div>
