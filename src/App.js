@@ -1,10 +1,12 @@
 import "./App.css";
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import { useState } from "react";
+import { createContext, useState } from "react";
 import Data from './Data.js';
 import Detail from './Pages/Detail.js';
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import axios from 'axios';
+
+export let Context1 = createContext()
 
 function App() {
 
@@ -12,6 +14,8 @@ function App() {
   let [loading, setLoading] = useState(false);
   let [page, setPage] = useState(1);
   let [isLastPage, setIsLastPage] = useState(false);
+  let [inventory] = useState([10,11,12])
+
   let navigate =  useNavigate();
 
   return (
@@ -59,7 +63,7 @@ function App() {
             .catch(()=>{ console.log('error'); setLoading(false); })
             }}>More</button>
         </>}/>
-        <Route path="/detail/:id" element={<><Detail shoes={shoes}></Detail></>}/>
+        <Route path="/detail/:id" element={<Context1.Provider value={{ inventory }}><Detail shoes={shoes}></Detail></Context1.Provider>}/>
         <Route path="*" element={<>404 PAGE</>} />
       </Routes>
     </div>
