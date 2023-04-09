@@ -1,17 +1,33 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Nav } from 'react-bootstrap'
-
 import { Context1 } from './../App.js'
+import { addItem } from "./../store.js"
+import { useDispatch, useSelector } from 'react-redux'
+
 
 function Detail(props) {
 
     let {inventory} = useContext(Context1)
 
-    let [count, setCount] = useState(0)
     let [alert, setAlert] = useState(true)
     let [tab, setTab] = useState(0)
     let [fade, setFade] = useState('')
+    let dispatch = useDispatch()
+
+    let {id} = useParams();
+    let shoe = props.shoes.find(function(x){
+        return x.id == id
+      });
+
+    useEffect(()=>{
+        let temp = localStorage.getItem('watched')
+        temp = JSON.parse(temp)
+        temp.push(shoe.id)
+        temp = new Set(temp)
+        temp = Array.from(temp)
+        localStorage.setItem('watched', JSON.stringify(temp))
+      }, [])
 
     useEffect(()=> {
         let a = setTimeout(()=> { setAlert(false) }, 2000)
@@ -22,11 +38,6 @@ function Detail(props) {
             setFade('')
         }
     },[])
-
-    let {id} = useParams();
-    let shoe = props.shoes.find(function(x){
-        return x.id == id
-      });
 
     return(
         <div className={'container start ' + fade}>
@@ -41,7 +52,7 @@ function Detail(props) {
                     <h4 className="pt-5">{shoe.title}</h4>
                     <p>{shoe.content}</p>
                     <p>{shoe.price}</p>
-                    <button className="btn btn-danger">주문하기</button>
+                    <button className="btn btn-danger" onClick={()=>{dispatch(addItem({id : `${shoe.id}`, name : `${shoe.title}`, count : 1}))}}>주문하기</button>
                 </div>
             </div>
             <Nav variant="tabs"  defaultActiveKey="link0">
